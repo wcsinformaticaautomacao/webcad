@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Revendedora | Montesanto Semijoias</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: { 100: '#F9F1D8', 300: '#EAD48F', 500: '#D4AF37', 600: '#AA8C2C', 800: '#554616' },
+                        montesanto: { black: '#1A1A1A', dark: '#2C2C2C' }
+                    },
+                    fontFamily: { serif: ['"Playfair Display"', 'serif'], sans: ['"Lato"', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #f8f8f8;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .section-title { position: relative; padding-bottom: 0.5rem; margin-bottom: 1.5rem; color: #1A1A1A; }
+        .section-title::after { content: ''; position: absolute; bottom: 0; left: 0; width: 50px; height: 3px; background-color: #D4AF37; }
+    </style>
+</head>
+<body class="font-sans text-gray-700 antialiased">
+
+    <header class="bg-montesanto-black text-white shadow-lg border-b-4 border-gold-500">
+        <div class="container mx-auto px-4 py-8 text-center">
+            <h1 class="font-serif text-4xl md:text-5xl text-gold-300 tracking-wider mb-2">MONTESANTO</h1>
+            <p class="text-xs md:text-sm tracking-[0.3em] uppercase text-gray-300">Semijoias Exclusivas</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-10 max-w-4xl">
+        <div class="bg-white rounded-lg shadow-xl overflow-hidden border border-gray-100">
+            <div class="p-8 md:p-12">
+                <div class="text-center mb-10">
+                    <h2 class="font-serif text-3xl text-montesanto-dark mb-4">Seja uma Revendedora</h2>
+                    <p class="text-gray-500">Cadastre-se para a análise do seu perfil comercial.</p>
+                </div>
+
+                <form id="resellerForm" class="space-y-10">
+                    <!-- Dados Pessoais -->
+                    <section>
+                        <h3 class="text-xl font-bold section-title font-serif">Dados Pessoais</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Nome Completo *</label>
+                                <input type="text" name="nome" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-gold-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">CPF *</label>
+                                <input type="text" name="cpf" id="cpf" required maxlength="14" oninput="maskCPF(this)" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-gold-500 outline-none">
+                            </div>
+                            <div class="grid grid-cols-3 gap-4">
+                                <div class="col-span-2">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">RG *</label>
+                                    <input type="text" name="rg" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-gold-500 outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">UF</label>
+                                    <input type="text" name="emissor" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-gold-500 outline-none">
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Endereço -->
+                    <section>
+                        <h3 class="text-xl font-bold section-title font-serif">Endereço</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-6 gap-6">
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">CEP *</label>
+                                <input type="text" name="cep" id="cep" required maxlength="9" oninput="maskCEP(this)" onblur="buscaCEP(this.value)" class="w-full px-4 py-2 border border-gray-300 rounded-md">
+                            </div>
+                            <div class="md:col-span-3">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Cidade</label>
+                                <input type="text" name="cidade" id="cidade" required class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md">
+                            </div>
+                            <div class="md:col-span-1">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">UF</label>
+                                <input type="text" name="estado" id="estado" required class="w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md">
+                            </div>
+                            <div class="md:col-span-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Endereço *</label>
+                                <input type="text" name="endereco" id="logradouro" required class="w-full px-4 py-2 border border-gray-300 rounded-md">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Número *</label>
+                                <input type="text" name="numero" required class="w-full px-4 py-2 border border-gray-300 rounded-md">
+                            </div>
+                            <div class="md:col-span-3">
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Bairro *</label>
+                                <input type="text" name="bairro" id="bairro" required class="w-full px-4 py-2 border border-gray-300 rounded-md">
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Contatos -->
+                    <section>
+                        <h3 class="text-xl font-bold section-title font-serif">Contato</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">WhatsApp *</label>
+                                <input type="tel" name="whatsapp" required oninput="maskPhone(this)" maxlength="15" class="w-full px-4 py-2 border border-gray-300 rounded-md">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">E-mail *</label>
+                                <input type="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-md">
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Documentos -->
+                    <section>
+                        <h3 class="text-xl font-bold section-title font-serif">Documentos (Fotos/PDF)</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-4 border-2 border-dashed border-gray-200 rounded text-center">
+                                <label class="block text-xs font-bold uppercase mb-2">Frente RG *</label>
+                                <input type="file" id="file_frente" required accept="image/*,.pdf" class="text-xs">
+                            </div>
+                            <div class="p-4 border-2 border-dashed border-gray-200 rounded text-center">
+                                <label class="block text-xs font-bold uppercase mb-2">Verso RG *</label>
+                                <input type="file" id="file_verso" required accept="image/*,.pdf" class="text-xs">
+                            </div>
+                            <div class="p-4 border-2 border-dashed border-gray-200 rounded text-center">
+                                <label class="block text-xs font-bold uppercase mb-2">CPF *</label>
+                                <input type="file" id="file_cpf" required accept="image/*,.pdf" class="text-xs">
+                            </div>
+                            <div class="p-4 border-2 border-dashed border-gray-200 rounded text-center">
+                                <label class="block text-xs font-bold uppercase mb-2">Residência *</label>
+                                <input type="file" id="file_res" required accept="image/*,.pdf" class="text-xs">
+                            </div>
+                        </div>
+                    </section>
+
+                    <button type="submit" id="btnSubmit" class="w-full bg-montesanto-black hover:bg-gold-600 text-gold-500 hover:text-white font-bold py-4 rounded-lg shadow-lg transition duration-300 uppercase">
+                        Enviar Cadastro
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal Sucesso -->
+    <div id="successModal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center z-50 px-4">
+        <div class="bg-white p-8 rounded-lg shadow-2xl max-w-sm text-center">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-check text-green-500 text-2xl"></i>
+            </div>
+            <h3 class="text-2xl font-serif mb-2">Cadastro Enviado!</h3>
+            <p id="successMsg" class="text-gray-600 mb-6">Estamos analisando seus dados.</p>
+            <button onclick="location.reload()" class="bg-gold-500 text-white px-8 py-2 rounded">Entendido</button>
+        </div>
+    </div>
+
+    <!-- FIREBASE SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-storage.js";
+
+        // CONFIGURAÇÃO DO FIREBASE (VOCÊ DEVE SUBSTITUIR PELOS SEUS DADOS NO PASSO A PASSO)
+        const firebaseConfig = {
+            apiKey: "AIzaSyCis9-MydXv_H391U7o9QX092VWm6SsDAc",
+            authDomain: "montesanto-cadastro.firebaseapp.com",
+            projectId: "montesanto-cadastro",
+            storageBucket: montesanto-cadastro.firebasestorage.app",
+            messagingSenderId: "248909770220",
+            appId: "1:248909770220:web:930dfd07c080472ab9a4c9",
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        // FORMULÁRIO
+        const form = document.getElementById('resellerForm');
+        
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btnSubmit');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> PROCESSANDO...';
+
+            try {
+                const formData = new FormData(form);
+                const nome = formData.get('nome');
+                const whatsapp = formData.get('whatsapp');
+                const idUnico = Date.now();
+
+                // 1. Upload de Arquivos
+                const files = {
+                    rg_frente: document.getElementById('file_frente').files[0],
+                    rg_verso: document.getElementById('file_verso').files[0],
+                    cpf: document.getElementById('file_cpf').files[0],
+                    residencia: document.getElementById('file_res').files[0]
+                };
+
+                const urls = {};
+                for (const [key, file] of Object.entries(files)) {
+                    const storageRef = ref(storage, `documentos/${idUnico}_${key}`);
+                    await uploadBytes(storageRef, file);
+                    urls[key] = await getDownloadURL(storageRef);
+                }
+
+                // 2. Salvar no Firestore
+                await addDoc(collection(db, "revendedoras"), {
+                    ...Object.fromEntries(formData),
+                    documentos: urls,
+                    data_cadastro: new Date().toISOString(),
+                    status: 'pendente'
+                });
+
+                // 3. Simular Notificação WhatsApp (Feedback Visual)
+                const msg = `Olá ${nome.split(' ')[0]}, seu cadastro na Montesanto foi recebido! Analisaremos seus documentos e entraremos em contato via WhatsApp (${whatsapp}) em breve.`;
+                document.getElementById('successMsg').innerHTML = msg;
+                document.getElementById('successModal').classList.remove('hidden');
+
+            } catch (error) {
+                console.error(error);
+                alert("Erro ao enviar cadastro. Verifique a configuração do Firebase.");
+            } finally {
+                btn.disabled = false;
+                btn.innerText = 'ENVIAR CADASTRO';
+            }
+        };
+    </script>
+
+    <script>
+        // Funções Auxiliares (Máscaras e CEP)
+        function maskCPF(i){ i.value=i.value.replace(/\D/g,"").replace(/(\d{3})(\d)/,"$1.$2").replace(/(\d{3})(\d)/,"$1.$2").replace(/(\d{3})(\d{1,2})$/,"$1-$2"); }
+        function maskPhone(i){ i.value=i.value.replace(/\D/g,"").replace(/^(\d{2})(\d)/g,"($1) $2").replace(/(\d)(\d{4})$/,"$1-$2"); }
+        function maskCEP(i){ i.value=i.value.replace(/\D/g,"").replace(/^(\d{5})(\d)/,"$1-$2"); }
+        
+        async function buscaCEP(cep) {
+            const c = cep.replace(/\D/g,'');
+            if(c.length===8){
+                const r = await fetch(`https://viacep.com.br/ws/${c}/json/`).then(res=>res.json());
+                if(!r.erro){
+                    document.getElementById('logradouro').value=r.logradouro;
+                    document.getElementById('bairro').value=r.bairro;
+                    document.getElementById('cidade').value=r.localidade;
+                    document.getElementById('estado').value=r.uf;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
